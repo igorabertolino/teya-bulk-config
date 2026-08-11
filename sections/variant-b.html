@@ -967,7 +967,7 @@ input:where([type='button'], [type='reset'], [type='submit']),
     from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
     to { opacity: 1; transform: translateY(0); filter: blur(0); }
   }
-  .screen { position: absolute; inset: 0; background: #f6f5f3; transition: transform 300ms cubic-bezier(0.2,0,0,1); }
+  .screen { position: absolute; inset: 0; background: #f6f5f3; transition: transform 300ms cubic-bezier(0.2,0,0,1); z-index: 0; }
   .screen.off-right { transform: translateX(100%); }
   .seg-pill { transition: transform 200ms cubic-bezier(0.2,0,0,1); }
   .toggle { transition: background-color 200ms ease; }
@@ -989,9 +989,13 @@ input:where([type='button'], [type='reset'], [type='submit']),
           <span class="text-[15px] font-semibold">9:41</span>
           <span class="text-[13px] tracking-tight">▮▮▮ ⏦ ▐▌</span>
         </div>
-        <div class="px-4 pt-1 pb-2 shrink-0">
+        <div class="px-4 pt-1 pb-2 shrink-0 flex items-center justify-between">
           <button class="size-10 rounded-full bg-[#5f4f300d] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+          </button>
+          <button id="btn-order" class="min-h-12 pl-[18px] pr-5 rounded-full bg-[#0b0b0a] text-white inline-flex items-center gap-1.5 text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add
           </button>
         </div>
         <div class="px-4 pb-3 shrink-0">
@@ -1019,7 +1023,6 @@ input:where([type='button'], [type='reset'], [type='submit']),
             <span class="text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Active</span>
           </div>
           <div class="bg-white rounded-3xl p-1 card-shadow" id="machine-list"></div>
-          <button id="btn-order" class="w-full inline-flex items-center justify-center min-h-12 px-4 py-3 rounded-2xl bg-[#f6f5f3] border border-dashed border-[#8f867633] text-[#090806ec] text-[14px] leading-[20px] font-semibold mt-4 active:scale-[0.96] transition-transform duration-150">+ Order a new card machine</button>
           <p class="text-[12px] leading-[16px] text-[#211c1266] text-center mt-6 text-pretty">Each machine follows its setup profile. Change the profile once and every machine on it updates.</p>
         </div>
 
@@ -1104,6 +1107,216 @@ input:where([type='button'], [type='reset'], [type='submit']),
 
       </div>
 
+      <!-- ============ SCREEN 3: ORDER — MODEL AND QUANTITY ============ -->
+      <div id="screen-order" class="screen off-right flex flex-col">
+        <div class="h-[50px] flex items-end justify-between px-7 pb-1 shrink-0 text-[#090806ec]">
+          <span class="text-[15px] font-semibold">9:41</span>
+          <span class="text-[13px] tracking-tight">▮▮▮ ⏦ ▐▌</span>
+        </div>
+        <div class="px-4 pt-1 pb-2 flex items-center shrink-0 relative min-h-[56px]">
+          <button id="btn-order-back" class="size-10 rounded-full bg-[#5f4f300d] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+          </button>
+          <span class="absolute left-1/2 -translate-x-1/2 text-[16px] leading-[24px] font-semibold text-[#090806ec]">New card machine</span>
+        </div>
+        <div class="overflow-y-auto flex-1 px-4 pb-4">
+          <p class="text-[16px] leading-[24px] text-[#16140e8c] pb-4 text-pretty">Prices from your Teya membership — the same you pay today, no surprises.</p>
+          <div class="model-choice bg-white rounded-3xl p-4 card-shadow cursor-pointer border-2 border-transparent transition-colors duration-150 animate-in" data-model="pro">
+            <div class="flex items-start gap-3">
+              <div class="size-12 rounded-2xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9 6.5h6"/><path d="M9 17.5h6"/></svg></div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <p class="text-[18px] leading-[26px] font-semibold text-[#090806ec]">Teya Pro</p>
+                  <span class="h-5 px-1.5 rounded-[6px] bg-[#e1e51a33] text-[#46520f] text-[12px] leading-[16px] font-semibold flex items-center">Best for your plan</span>
+                </div>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c] text-pretty mt-0.5">Countertop with printer · same as your other machines</p>
+                <p class="text-[18px] leading-[26px] font-semibold text-[#090806ec] mt-2 tabular-nums">£20/month</p>
+              </div>
+              <span class="model-check size-7 rounded-full border-[1.5px] border-[#776f5f4d] bg-white text-transparent flex items-center justify-center shrink-0 transition-colors"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            </div>
+          </div>
+          <div class="model-choice bg-white rounded-3xl p-4 mt-4 card-shadow cursor-pointer border-2 border-transparent transition-colors duration-150 animate-in" style="animation-delay: 100ms" data-model="go">
+            <div class="flex items-start gap-3">
+              <div class="size-12 rounded-2xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7.5" y="2.5" width="9" height="19" rx="2.5"/><path d="M10 6h4"/><path d="M10 18h4"/></svg></div>
+              <div class="flex-1 min-w-0">
+                <p class="text-[18px] leading-[26px] font-semibold text-[#090806ec]">Teya Go</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c] text-pretty mt-0.5">Portable, all-day battery · great for tables and queues</p>
+                <p class="text-[18px] leading-[26px] font-semibold text-[#090806ec] mt-2 tabular-nums">£15/month</p>
+              </div>
+              <span class="model-check size-7 rounded-full border-[1.5px] border-[#776f5f4d] bg-white text-transparent flex items-center justify-center shrink-0 transition-colors"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            </div>
+          </div>
+          <div class="bg-white rounded-3xl p-4 mt-4 card-shadow flex items-center justify-between animate-in" style="animation-delay: 200ms">
+            <div>
+              <p class="text-[18px] leading-[26px] font-semibold text-[#090806ec]">How many?</p>
+              <p class="text-[14px] leading-[20px] text-[#16140e8c]">Up to 5 per order</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="qty-minus" class="size-12 rounded-full bg-[#f6f5f3] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+              <span id="qty-count" class="text-[24px] leading-[32px] font-semibold text-[#090806ec] tabular-nums w-7 text-center">1</span>
+              <button id="qty-plus" class="size-12 rounded-full bg-[#f6f5f3] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 pb-8 pt-3 shrink-0">
+          <button id="btn-order-continue" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Continue</button>
+        </div>
+      </div>
+
+      <!-- ============ SCREEN 4: ORDER — WHICH STORE ============ -->
+      <div id="screen-store" class="screen off-right flex flex-col">
+        <div class="h-[50px] flex items-end justify-between px-7 pb-1 shrink-0 text-[#090806ec]">
+          <span class="text-[15px] font-semibold">9:41</span>
+          <span class="text-[13px] tracking-tight">▮▮▮ ⏦ ▐▌</span>
+        </div>
+        <div class="px-4 pt-1 pb-2 flex items-center shrink-0 relative min-h-[56px]">
+          <button id="btn-store-back" class="size-10 rounded-full bg-[#5f4f300d] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+          </button>
+          <span class="absolute left-1/2 -translate-x-1/2 text-[16px] leading-[24px] font-semibold text-[#090806ec]">Which store?</span>
+        </div>
+        <div class="overflow-y-auto flex-1 px-4 pb-4">
+          <p class="text-[16px] leading-[24px] text-[#16140e8c] pb-4 text-pretty">The new machine takes payments for this store and appears in its reports.</p>
+          <div class="bg-white rounded-3xl p-1 card-shadow animate-in">
+            <div class="store-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-store="camden">
+              <div class="size-10 rounded-xl bg-[#fce7f3] text-[#c6005c] flex items-center justify-center text-[16px] leading-[24px] font-semibold shrink-0">C</div>
+              <div class="ml-3 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">CoffeeBrain · Camden</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">3 machines · 12 Camden High Street</p>
+              </div>
+              <span class="radio size-6 rounded-full border-2 border-[#776f5f4d] flex items-center justify-center shrink-0 transition-colors"><span class="radio-dot size-3 rounded-full bg-transparent transition-colors"></span></span>
+              <span class="absolute left-[64px] right-3 bottom-0 border-t border-[#756b571a]"></span>
+            </div>
+            <div class="store-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-store="soho">
+              <div class="size-10 rounded-xl bg-[#e0e7ff] text-[#4f39f6] flex items-center justify-center text-[16px] leading-[24px] font-semibold shrink-0">S</div>
+              <div class="ml-3 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">CoffeeBrain · Soho</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">2 machines · 8 Berwick Street</p>
+              </div>
+              <span class="radio size-6 rounded-full border-2 border-[#776f5f4d] flex items-center justify-center shrink-0 transition-colors"><span class="radio-dot size-3 rounded-full bg-transparent transition-colors"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 pb-8 pt-3 shrink-0">
+          <button id="btn-store-continue" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Continue</button>
+        </div>
+      </div>
+
+      <!-- ============ SCREEN 5: ORDER — REVIEW ============ -->
+      <div id="screen-review" class="screen off-right flex flex-col">
+        <div class="h-[50px] flex items-end justify-between px-7 pb-1 shrink-0 text-[#090806ec]">
+          <span class="text-[15px] font-semibold">9:41</span>
+          <span class="text-[13px] tracking-tight">▮▮▮ ⏦ ▐▌</span>
+        </div>
+        <div class="px-4 pt-1 pb-2 flex items-center shrink-0 relative min-h-[56px]">
+          <button id="btn-review-back" class="size-10 rounded-full bg-[#5f4f300d] flex items-center justify-center text-[#090806ec] active:scale-[0.96] transition-transform duration-150">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+          </button>
+          <span class="absolute left-1/2 -translate-x-1/2 text-[16px] leading-[24px] font-semibold text-[#090806ec]">Review your order</span>
+        </div>
+        <div class="overflow-y-auto flex-1 px-4 pb-4">
+          <div class="bg-white rounded-3xl p-4 card-shadow animate-in">
+            <span class="text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Order</span>
+            <div class="mt-1">
+              <div class="flex items-center justify-between gap-3 py-2.5">
+                <p id="review-line" class="text-[16px] leading-[24px] font-medium text-[#090806ec]">1 × Teya Pro</p>
+                <p id="review-monthly" class="text-[16px] leading-[24px] font-semibold text-[#090806ec] tabular-nums">£20.00/month</p>
+              </div>
+              <div class="border-t border-[#756b571a] flex items-center justify-between gap-3 py-2.5">
+                <p class="text-[16px] leading-[24px] text-[#16140e8c]">Store</p>
+                <p id="review-store" class="text-[16px] leading-[24px] font-medium text-[#090806ec]">CoffeeBrain · Camden</p>
+              </div>
+              <div class="border-t border-[#756b571a] flex items-center justify-between gap-3 py-2.5">
+                <p class="text-[16px] leading-[24px] text-[#16140e8c]">Delivery</p>
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Courier · by 14 August</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-3xl p-4 mt-4 card-shadow animate-in" style="animation-delay: 100ms">
+            <span class="text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Billing</span>
+            <div class="mt-1">
+              <div class="flex items-center justify-between gap-3 py-2.5">
+                <p class="text-[16px] leading-[24px] text-[#16140e8c]">Charged today (rest of August)</p>
+                <p id="review-charged" class="text-[16px] leading-[24px] font-semibold text-[#090806ec] tabular-nums">£13.55</p>
+              </div>
+              <div class="border-t border-[#756b571a] flex items-center justify-between gap-3 py-2.5">
+                <p class="text-[16px] leading-[24px] text-[#16140e8c]">Then, from 1 September</p>
+                <p id="review-from" class="text-[16px] leading-[24px] font-medium text-[#090806ec] tabular-nums">£20.00/month</p>
+              </div>
+              <div class="border-t border-[#756b571a] flex items-center justify-between gap-3 py-2.5">
+                <p class="text-[16px] leading-[24px] text-[#16140e8c]">Paying with</p>
+                <span class="flex items-center gap-2">
+                  <span class="h-5 px-1.5 rounded-[4px] bg-[#1434cb] text-white text-[11px] leading-none font-bold flex items-center">VISA</span>
+                  <span class="text-[16px] leading-[24px] font-medium text-[#090806ec] tabular-nums">•••• 4321</span>
+                </span>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[20px] text-[#16140e8c] mt-2 text-pretty">Added to your Teya membership as its own line. Same prices as your plan today.</p>
+          </div>
+          <div class="bg-white rounded-3xl p-4 mt-4 card-shadow animate-in" style="animation-delay: 200ms">
+            <span class="text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Setup profile</span>
+            <div class="mt-1">
+              <div class="profile-choice flex items-start gap-3 py-2.5 cursor-pointer" data-profile="foh">
+                <span class="radio size-6 rounded-full border-2 border-[#776f5f4d] flex items-center justify-center shrink-0 transition-colors mt-0.5"><span class="radio-dot size-3 rounded-full bg-transparent transition-colors"></span></span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-[16px] leading-[24px] font-semibold text-[#090806ec]">Front of house</p>
+                  <p class="text-[14px] leading-[20px] text-[#16140e8c] text-pretty">Tips, receipts, and PIN policy applied before it arrives. No setup screens — ready to take payments when switched on.</p>
+                </div>
+              </div>
+              <div class="profile-choice border-t border-[#756b571a] flex items-start gap-3 py-2.5 cursor-pointer" data-profile="none">
+                <span class="radio size-6 rounded-full border-2 border-[#776f5f4d] flex items-center justify-center shrink-0 transition-colors mt-0.5"><span class="radio-dot size-3 rounded-full bg-transparent transition-colors"></span></span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-[16px] leading-[24px] font-semibold text-[#090806ec]">No profile — set up on the machine</p>
+                  <p class="text-[14px] leading-[20px] text-[#16140e8c] text-pretty">Walk through the setup screens when it arrives.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 pb-8 pt-3 shrink-0">
+          <button id="btn-confirm" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Confirm and pay £13.55</button>
+        </div>
+      </div>
+
+      <!-- ============ SCREEN 6: ORDER — PLACED ============ -->
+      <div id="screen-success" class="screen off-right flex flex-col">
+        <div class="h-[50px] flex items-end justify-between px-7 pb-1 shrink-0 text-[#090806ec]">
+          <span class="text-[15px] font-semibold">9:41</span>
+          <span class="text-[13px] tracking-tight">▮▮▮ ⏦ ▐▌</span>
+        </div>
+        <div class="overflow-y-auto flex-1 px-4 pb-4">
+          <div class="pt-14 text-center">
+            <div class="size-16 rounded-[20px] bg-[#7ccf001a] text-[#497d00] flex items-center justify-center mx-auto">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h2 class="text-[28px] leading-[36px] font-semibold text-[#090806ec] mt-5 text-balance">Order placed</h2>
+            <p id="success-sub" class="text-[18px] leading-[28px] text-[#16140e8c] mt-2 text-pretty">3 × Teya Go arriving by 14 August at CoffeeBrain · Camden</p>
+          </div>
+          <div class="bg-white rounded-3xl p-4 mt-8 card-shadow flex items-start gap-3 text-left">
+            <div class="size-10 rounded-xl bg-[#e1e51a33] text-[#46520f] flex items-center justify-center shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2 4.5 12h6l-1 10L18 12h-6l1-10z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p id="success-ready-title" class="text-[16px] leading-[24px] font-semibold text-[#090806ec]">Ready the moment they arrive</p>
+              <p id="success-ready-body" class="text-[14px] leading-[20px] text-[#16140e8c] text-pretty mt-0.5">Your Front of house profile will be waiting on all 3 machines. Switch on → downloading settings → ready to take payments.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-3xl p-4 mt-4 card-shadow">
+            <div class="flex items-center justify-between gap-3 py-1.5">
+              <p class="text-[16px] leading-[24px] text-[#16140e8c]">Charged to Visa •••• 4321</p>
+              <p id="success-charged" class="text-[16px] leading-[24px] font-semibold text-[#090806ec] tabular-nums">£30.48</p>
+            </div>
+            <div class="border-t border-[#756b571a] flex items-center justify-between gap-3 py-1.5 mt-1.5 pt-3">
+              <p class="text-[16px] leading-[24px] text-[#16140e8c]">Order reference</p>
+              <p class="text-[16px] leading-[24px] font-medium text-[#090806ec] tabular-nums">TY-84172</p>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 pb-8 pt-3 shrink-0">
+          <button id="btn-success-done" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#0b0b0a] text-white text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">See my card machines</button>
+        </div>
+      </div>
+
       <!-- ============ SHEET: ASSIGN MACHINES ============ -->
       <div id="sheet" class="absolute inset-0 pointer-events-none z-20">
         <div id="sheet-backdrop" class="sheet-backdrop absolute inset-0 bg-black/40 opacity-0"></div>
@@ -1116,59 +1329,6 @@ input:where([type='button'], [type='reset'], [type='submit']),
           <div id="assign-list" class="overflow-y-auto px-4 flex-1"></div>
           <div class="px-4 pb-8 pt-3 shrink-0 border-t border-[#756b571a]">
             <button id="btn-assign-apply" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Add to profile</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ SHEET: ORDER A CARD MACHINE ============ -->
-      <div id="order-sheet" class="absolute inset-0 pointer-events-none z-20">
-        <div id="order-backdrop" class="sheet-backdrop absolute inset-0 bg-black/40 opacity-0"></div>
-        <div id="order-panel" class="sheet-panel absolute left-0 right-0 bottom-0 bg-white rounded-t-[32px] translate-y-full flex flex-col" style="max-height: 85%;">
-          <div class="pt-3 pb-1 flex justify-center shrink-0"><span class="w-9 h-1 rounded-full bg-[#d6d5d1]"></span></div>
-          <div class="px-5 pb-3 shrink-0">
-            <h2 class="text-[18px] leading-[26px] font-semibold text-[#090806ec]">Order a card machine</h2>
-            <p class="text-[14px] leading-[20px] text-[#16140e8c]">Put it on a profile and it arrives ready to take payments.</p>
-          </div>
-          <div class="overflow-y-auto px-4 flex-1">
-            <p class="px-1 pb-1 pt-1 text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Model</p>
-            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-model="pro">
-              <span class="radio size-6 rounded-full border-[1.5px] bg-[#090806ec] border-[#090806ec] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
-              <div class="size-10 rounded-xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9 6.5h6"/><path d="M9 17.5h6"/></svg></div>
-              <div class="ml-3 flex-1 min-w-0">
-                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Teya Pro</p>
-                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Countertop · ideal for the till</p>
-              </div>
-              <span class="absolute left-[52px] right-3 bottom-0 border-t border-[#756b571a]"></span>
-            </div>
-            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-model="go">
-              <span class="radio size-6 rounded-full border-[1.5px] bg-white border-[#776f5f4d] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
-              <div class="size-10 rounded-xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9 6.5h6"/><path d="M9 17.5h6"/></svg></div>
-              <div class="ml-3 flex-1 min-w-0">
-                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Teya Go</p>
-                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Portable · take payments anywhere</p>
-              </div>
-            </div>
-            <p class="px-1 pb-1 pt-4 text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Setup profile</p>
-            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-profile="foh">
-              <span class="radio size-6 rounded-full border-[1.5px] bg-[#090806ec] border-[#090806ec] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
-              <div class="ml-1 flex-1 min-w-0">
-                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Front of house</p>
-                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Applied before it arrives — ready on first switch-on</p>
-              </div>
-              <span class="h-5 px-1.5 rounded-[6px] bg-[#2b7fff1a] text-[#1447e6] text-[12px] leading-[16px] font-semibold flex items-center shrink-0">Ready on arrival</span>
-              <span class="absolute left-[36px] right-3 bottom-0 border-t border-[#756b571a]"></span>
-            </div>
-            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer mb-2" data-profile="none">
-              <span class="radio size-6 rounded-full border-[1.5px] bg-white border-[#776f5f4d] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
-              <div class="ml-1 flex-1 min-w-0">
-                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">No profile</p>
-                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Set it up on the machine when it arrives</p>
-              </div>
-            </div>
-          </div>
-          <div class="px-4 pb-8 pt-3 shrink-0 border-t border-[#756b571a]">
-            <button id="btn-order-apply" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Order machine</button>
-            <p class="text-[12px] leading-[16px] text-[#211c1266] text-center mt-3">Arrives in 2–3 working days · free delivery</p>
           </div>
         </div>
       </div>
@@ -1354,47 +1514,91 @@ document.getElementById('btn-assign-apply').addEventListener('click', () => {
   if (n) showToast(`Added ${n} machine${n === 1 ? '' : 's'} — settings on their way`);
 });
 
-// Order sheet (upsell — new machine inherits the profile, PRD B7)
-const orderSheet = document.getElementById('order-sheet');
-const orderBackdrop = document.getElementById('order-backdrop');
-const orderPanel = document.getElementById('order-panel');
-let orderModel = 'pro', orderProfile = 'foh', orderSeq = 0;
-function paintOrder() {
-  document.querySelectorAll('.order-choice').forEach(r => {
-    const sel = r.dataset.model ? r.dataset.model === orderModel : r.dataset.profile === orderProfile;
+// Order flow (upsell — new machines inherit a profile, PRD B7)
+const MODELS = { pro: { name: 'Teya Pro', monthly: 20 }, go: { name: 'Teya Go', monthly: 15 } };
+const STORES = { camden: 'CoffeeBrain · Camden', soho: 'CoffeeBrain · Soho' };
+const order = { model: 'pro', qty: 1, store: 'camden', profile: 'foh' };
+let orderSeq = 0;
+const gbp = n => '£' + n.toFixed(2);
+const orderMonthly = () => MODELS[order.model].monthly * order.qty;
+const chargedToday = () => Math.round(orderMonthly() * 21 / 31 * 100) / 100; // 21 remaining days of August
+
+const scr = id => document.getElementById(id);
+function paintRadios(selector, key) {
+  document.querySelectorAll(selector).forEach(r => {
+    const sel = r.dataset[key] === order[key];
     const radio = r.querySelector('.radio');
-    radio.classList.toggle('bg-[#090806ec]', sel);
     radio.classList.toggle('border-[#090806ec]', sel);
-    radio.classList.toggle('bg-white', !sel);
     radio.classList.toggle('border-[#776f5f4d]', !sel);
+    const dot = r.querySelector('.radio-dot');
+    dot.classList.toggle('bg-[#090806ec]', sel);
+    dot.classList.toggle('bg-transparent', !sel);
   });
+}
+function paintOrder() {
+  document.querySelectorAll('.model-choice').forEach(c => {
+    const sel = c.dataset.model === order.model;
+    c.classList.toggle('border-[#090806ec]', sel);
+    c.classList.toggle('border-transparent', !sel);
+    const check = c.querySelector('.model-check');
+    check.classList.toggle('bg-[#0b0b0a]', sel);
+    check.classList.toggle('border-[#0b0b0a]', sel);
+    check.classList.toggle('text-white', sel);
+    check.classList.toggle('bg-white', !sel);
+    check.classList.toggle('border-[#776f5f4d]', !sel);
+    check.classList.toggle('text-transparent', !sel);
+  });
+  document.getElementById('qty-count').textContent = order.qty;
+  document.getElementById('qty-minus').classList.toggle('opacity-40', order.qty <= 1);
+  document.getElementById('qty-plus').classList.toggle('opacity-40', order.qty >= 5);
+  paintRadios('.store-choice', 'store');
+  paintRadios('.profile-choice', 'profile');
+}
+function paintReview() {
+  document.getElementById('review-line').textContent = `${order.qty} × ${MODELS[order.model].name}`;
+  document.getElementById('review-monthly').textContent = gbp(orderMonthly()) + '/month';
+  document.getElementById('review-store').textContent = STORES[order.store];
+  document.getElementById('review-charged').textContent = gbp(chargedToday());
+  document.getElementById('review-from').textContent = gbp(orderMonthly()) + '/month';
+  document.getElementById('btn-confirm').textContent = `Confirm and pay ${gbp(chargedToday())}`;
 }
 document.getElementById('btn-order').addEventListener('click', () => {
-  orderModel = 'pro'; orderProfile = 'foh'; paintOrder();
-  orderSheet.classList.remove('pointer-events-none');
-  requestAnimationFrame(() => { orderBackdrop.classList.remove('opacity-0'); orderPanel.classList.remove('translate-y-full'); });
-});
-function closeOrderSheet() {
-  orderBackdrop.classList.add('opacity-0'); orderPanel.classList.add('translate-y-full');
-  setTimeout(() => orderSheet.classList.add('pointer-events-none'), 300);
-}
-orderBackdrop.addEventListener('click', closeOrderSheet);
-document.querySelectorAll('.order-choice').forEach(r => r.addEventListener('click', () => {
-  if (r.dataset.model) orderModel = r.dataset.model; else orderProfile = r.dataset.profile;
+  order.model = 'pro'; order.qty = 1; order.store = 'camden'; order.profile = 'foh';
   paintOrder();
-}));
-document.getElementById('btn-order-apply').addEventListener('click', () => {
-  orderSeq++;
-  machines.push({
-    id: 'o' + orderSeq,
-    name: orderModel === 'pro' ? 'Teya Pro' : 'Teya Go',
-    meta: 'New · arrives 14 August',
-    profile: orderProfile === 'foh' ? 'foh' : null,
-    online: false,
-    pending: true,
-  });
-  closeOrderSheet(); renderMachines(); renderProfileCards(); renderProfileMachines();
-  showToast(orderProfile === 'foh' ? 'Ordered — Front of house ready on arrival' : 'Ordered — arrives 14 August');
+  scr('screen-order').classList.remove('off-right');
+});
+document.getElementById('btn-order-back').addEventListener('click', () => scr('screen-order').classList.add('off-right'));
+document.getElementById('btn-store-back').addEventListener('click', () => scr('screen-store').classList.add('off-right'));
+document.getElementById('btn-review-back').addEventListener('click', () => scr('screen-review').classList.add('off-right'));
+document.querySelectorAll('.model-choice').forEach(c => c.addEventListener('click', () => { order.model = c.dataset.model; paintOrder(); }));
+document.getElementById('qty-minus').addEventListener('click', () => { if (order.qty > 1) { order.qty--; paintOrder(); } });
+document.getElementById('qty-plus').addEventListener('click', () => { if (order.qty < 5) { order.qty++; paintOrder(); } });
+document.querySelectorAll('.store-choice').forEach(c => c.addEventListener('click', () => { order.store = c.dataset.store; paintOrder(); }));
+document.querySelectorAll('.profile-choice').forEach(c => c.addEventListener('click', () => { order.profile = c.dataset.profile; paintOrder(); }));
+document.getElementById('btn-order-continue').addEventListener('click', () => scr('screen-store').classList.remove('off-right'));
+document.getElementById('btn-store-continue').addEventListener('click', () => { paintReview(); scr('screen-review').classList.remove('off-right'); });
+document.getElementById('btn-confirm').addEventListener('click', () => {
+  const many = order.qty > 1;
+  document.getElementById('success-sub').textContent = `${order.qty} × ${MODELS[order.model].name} arriving by 14 August at ${STORES[order.store]}`;
+  if (order.profile === 'foh') {
+    document.getElementById('success-ready-title').textContent = many ? 'Ready the moment they arrive' : 'Ready the moment it arrives';
+    document.getElementById('success-ready-body').textContent = `Your Front of house profile will be waiting on ${many ? 'all ' + order.qty + ' machines' : 'your new machine'}. Switch on → downloading settings → ready to take payments.`;
+  } else {
+    document.getElementById('success-ready-title').textContent = 'Set up on arrival';
+    document.getElementById('success-ready-body').textContent = many
+      ? 'Walk through the setup screens on each machine the first time you switch it on.'
+      : 'Walk through the setup screens the first time you switch it on.';
+  }
+  document.getElementById('success-charged').textContent = gbp(chargedToday());
+  scr('screen-success').classList.remove('off-right');
+});
+document.getElementById('btn-success-done').addEventListener('click', () => {
+  for (let i = 0; i < order.qty; i++) {
+    orderSeq++;
+    machines.push({ id: 'o' + orderSeq, name: MODELS[order.model].name, meta: 'New · arrives 14 August', profile: order.profile === 'foh' ? 'foh' : null, online: false, pending: true });
+  }
+  renderMachines(); renderProfileCards(); renderProfileMachines();
+  ['screen-success', 'screen-review', 'screen-store', 'screen-order'].forEach(id => scr(id).classList.add('off-right'));
 });
 </script>
 </body>

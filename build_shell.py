@@ -67,7 +67,7 @@ const NOTES = {
       <ul class="text-[14px] leading-[20px] text-[#090806ec] mt-3 space-y-2 list-disc pl-4">
         <li>Try: Setup profiles tab → Front of house → flip a toggle</li>
         <li>Add machines to the profile; note "Apply to new machines"</li>
-        <li>Order a new card machine from the Machines tab — it arrives with the profile ready (upsell, PRD B7)</li>
+        <li>Tap "+ Add" — model, quantity, store, review and pay; machines arrive with the profile ready (upsell, PRD B7)</li>
       </ul>
       <p class="text-[13px] leading-[18px] text-[#16140e8c] mt-4"><strong class="text-[#090806ec]">Trade-off:</strong> most powerful — it is the bridge to auto-inherit on upsell (PRD B7 / V2) — but introduces a new concept merchants must learn.</p>`
 };
