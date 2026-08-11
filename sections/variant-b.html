@@ -1019,6 +1019,7 @@ input:where([type='button'], [type='reset'], [type='submit']),
             <span class="text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Active</span>
           </div>
           <div class="bg-white rounded-3xl p-1 card-shadow" id="machine-list"></div>
+          <button id="btn-order" class="w-full inline-flex items-center justify-center min-h-12 px-4 py-3 rounded-2xl bg-[#f6f5f3] border border-dashed border-[#8f867633] text-[#090806ec] text-[14px] leading-[20px] font-semibold mt-4 active:scale-[0.96] transition-transform duration-150">+ Order a new card machine</button>
           <p class="text-[12px] leading-[16px] text-[#211c1266] text-center mt-6 text-pretty">Each machine follows its setup profile. Change the profile once and every machine on it updates.</p>
         </div>
 
@@ -1101,13 +1102,6 @@ input:where([type='button'], [type='reset'], [type='submit']),
           </div>
         </div>
 
-        <!-- Toast -->
-        <div id="toast" class="toast absolute left-4 right-4 bottom-8 bg-[#0b0b0a] text-white rounded-2xl px-4 py-3 flex items-center gap-3 translate-y-24 opacity-0 pointer-events-none">
-          <span class="size-6 rounded-full bg-[#7ccf001a] text-[#9ae600] flex items-center justify-center shrink-0">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          </span>
-          <p id="toast-text" class="text-[14px] leading-[20px]">Updated on 3 machines</p>
-        </div>
       </div>
 
       <!-- ============ SHEET: ASSIGN MACHINES ============ -->
@@ -1124,6 +1118,67 @@ input:where([type='button'], [type='reset'], [type='submit']),
             <button id="btn-assign-apply" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Add to profile</button>
           </div>
         </div>
+      </div>
+
+      <!-- ============ SHEET: ORDER A CARD MACHINE ============ -->
+      <div id="order-sheet" class="absolute inset-0 pointer-events-none z-20">
+        <div id="order-backdrop" class="sheet-backdrop absolute inset-0 bg-black/40 opacity-0"></div>
+        <div id="order-panel" class="sheet-panel absolute left-0 right-0 bottom-0 bg-white rounded-t-[32px] translate-y-full flex flex-col" style="max-height: 85%;">
+          <div class="pt-3 pb-1 flex justify-center shrink-0"><span class="w-9 h-1 rounded-full bg-[#d6d5d1]"></span></div>
+          <div class="px-5 pb-3 shrink-0">
+            <h2 class="text-[18px] leading-[26px] font-semibold text-[#090806ec]">Order a card machine</h2>
+            <p class="text-[14px] leading-[20px] text-[#16140e8c]">Put it on a profile and it arrives ready to take payments.</p>
+          </div>
+          <div class="overflow-y-auto px-4 flex-1">
+            <p class="px-1 pb-1 pt-1 text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Model</p>
+            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-model="pro">
+              <span class="radio size-6 rounded-full border-[1.5px] bg-[#090806ec] border-[#090806ec] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
+              <div class="size-10 rounded-xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9 6.5h6"/><path d="M9 17.5h6"/></svg></div>
+              <div class="ml-3 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Teya Pro</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Countertop · ideal for the till</p>
+              </div>
+              <span class="absolute left-[52px] right-3 bottom-0 border-t border-[#756b571a]"></span>
+            </div>
+            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-model="go">
+              <span class="radio size-6 rounded-full border-[1.5px] bg-white border-[#776f5f4d] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
+              <div class="size-10 rounded-xl bg-[#f6f5f3] outline outline-1 -outline-offset-1 outline-[#756b571a] flex items-center justify-center text-[#16140e8c] shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9 6.5h6"/><path d="M9 17.5h6"/></svg></div>
+              <div class="ml-3 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Teya Go</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Portable · take payments anywhere</p>
+              </div>
+            </div>
+            <p class="px-1 pb-1 pt-4 text-[12px] leading-[16px] font-semibold uppercase tracking-[1.5px] text-[#16140e8c]">Setup profile</p>
+            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer" data-profile="foh">
+              <span class="radio size-6 rounded-full border-[1.5px] bg-[#090806ec] border-[#090806ec] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
+              <div class="ml-1 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">Front of house</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Applied before it arrives — ready on first switch-on</p>
+              </div>
+              <span class="h-5 px-1.5 rounded-[6px] bg-[#2b7fff1a] text-[#1447e6] text-[12px] leading-[16px] font-semibold flex items-center shrink-0">Ready on arrival</span>
+              <span class="absolute left-[36px] right-3 bottom-0 border-t border-[#756b571a]"></span>
+            </div>
+            <div class="order-choice relative flex items-center p-3 rounded-[20px] active:bg-[#756b571a] cursor-pointer mb-2" data-profile="none">
+              <span class="radio size-6 rounded-full border-[1.5px] bg-white border-[#776f5f4d] flex items-center justify-center mr-3 shrink-0 transition-colors"><span class="size-2.5 rounded-full bg-white"></span></span>
+              <div class="ml-1 flex-1 min-w-0">
+                <p class="text-[16px] leading-[24px] font-medium text-[#090806ec]">No profile</p>
+                <p class="text-[14px] leading-[20px] text-[#16140e8c]">Set it up on the machine when it arrives</p>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 pb-8 pt-3 shrink-0 border-t border-[#756b571a]">
+            <button id="btn-order-apply" class="w-full inline-flex items-center justify-center min-h-14 px-4 py-3 rounded-[32px] bg-[#e1e51a] text-[#29320c] text-[16px] leading-[24px] font-semibold active:scale-[0.96] transition-transform duration-150">Order machine</button>
+            <p class="text-[12px] leading-[16px] text-[#211c1266] text-center mt-3">Arrives in 2–3 working days · free delivery</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast (global, above screens and sheets) -->
+      <div id="toast" class="toast absolute left-4 right-4 bottom-8 z-30 bg-[#0b0b0a] text-white rounded-2xl px-4 py-3 flex items-center gap-3 translate-y-24 opacity-0 pointer-events-none">
+        <span class="size-6 rounded-full bg-[#7ccf001a] text-[#9ae600] flex items-center justify-center shrink-0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <p id="toast-text" class="text-[14px] leading-[20px]">Updated on 3 machines</p>
       </div>
 
     </div>
@@ -1297,6 +1352,49 @@ document.getElementById('btn-assign-apply').addEventListener('click', () => {
   machines.forEach(m => { if (assignSel.has(m.id)) m.profile = 'foh'; });
   closeSheet(); renderMachines(); renderProfileCards(); renderProfileMachines();
   if (n) showToast(`Added ${n} machine${n === 1 ? '' : 's'} — settings on their way`);
+});
+
+// Order sheet (upsell — new machine inherits the profile, PRD B7)
+const orderSheet = document.getElementById('order-sheet');
+const orderBackdrop = document.getElementById('order-backdrop');
+const orderPanel = document.getElementById('order-panel');
+let orderModel = 'pro', orderProfile = 'foh', orderSeq = 0;
+function paintOrder() {
+  document.querySelectorAll('.order-choice').forEach(r => {
+    const sel = r.dataset.model ? r.dataset.model === orderModel : r.dataset.profile === orderProfile;
+    const radio = r.querySelector('.radio');
+    radio.classList.toggle('bg-[#090806ec]', sel);
+    radio.classList.toggle('border-[#090806ec]', sel);
+    radio.classList.toggle('bg-white', !sel);
+    radio.classList.toggle('border-[#776f5f4d]', !sel);
+  });
+}
+document.getElementById('btn-order').addEventListener('click', () => {
+  orderModel = 'pro'; orderProfile = 'foh'; paintOrder();
+  orderSheet.classList.remove('pointer-events-none');
+  requestAnimationFrame(() => { orderBackdrop.classList.remove('opacity-0'); orderPanel.classList.remove('translate-y-full'); });
+});
+function closeOrderSheet() {
+  orderBackdrop.classList.add('opacity-0'); orderPanel.classList.add('translate-y-full');
+  setTimeout(() => orderSheet.classList.add('pointer-events-none'), 300);
+}
+orderBackdrop.addEventListener('click', closeOrderSheet);
+document.querySelectorAll('.order-choice').forEach(r => r.addEventListener('click', () => {
+  if (r.dataset.model) orderModel = r.dataset.model; else orderProfile = r.dataset.profile;
+  paintOrder();
+}));
+document.getElementById('btn-order-apply').addEventListener('click', () => {
+  orderSeq++;
+  machines.push({
+    id: 'o' + orderSeq,
+    name: orderModel === 'pro' ? 'Teya Pro' : 'Teya Go',
+    meta: 'New · arrives 14 August',
+    profile: orderProfile === 'foh' ? 'foh' : null,
+    online: false,
+    pending: true,
+  });
+  closeOrderSheet(); renderMachines(); renderProfileCards(); renderProfileMachines();
+  showToast(orderProfile === 'foh' ? 'Ordered — Front of house ready on arrival' : 'Ordered — arrives 14 August');
 });
 </script>
 </body>
