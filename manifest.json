@@ -1,5 +1,5 @@
 {
-  "feature": "Remote and bulk configuration — 3 solutions to evaluate",
+  "feature": "Remote and bulk configuration — two solutions to evaluate",
   "created": "2026-08-04",
   "source": "Confluence: (Upsells + Remote/Bulk Config) — PRD & User Stories (SALTPOS/9140568236)",
   "sections": [
@@ -14,12 +14,6 @@
       "title": "B — Setup profiles",
       "file": "sections/variant-b.html",
       "description": "Act on the configuration: named profiles that machines follow; editing a profile re-applies to the fleet, new machines inherit automatically."
-    },
-    {
-      "id": "variant-c",
-      "title": "C — Mirror a machine",
-      "file": "sections/variant-c.html",
-      "description": "One machine is the template: from its detail page, apply its settings to other machines with a change preview."
     }
   ]
 }
