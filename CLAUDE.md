@@ -19,13 +19,14 @@ copy inside the prototype is **British English**.
 ## Decisions — do not revisit without asking Igor
 
 - **Variant C ("mirror a machine") was DISCARDED. Never reintroduce it.**
-- Two variants remain:
-  - **A — Multi-select**: act on the machines. Select rows → one settings form →
-    apply → per-device status (Applied / Waiting · offline / Ready on arrival).
-  - **B — Setup profiles**: act on the configuration. Named profile ("Front of house"),
-    machines follow it; editing re-applies to the fleet; "Apply to new machines" toggle
-    is the bridge to PRD B7 / V2 auto-inherit.
-- Both variants group the machine list into **Arriving soon** / **Active**. A pending
+- **Variant A ("multi-select") was REMOVED on 13 Aug 2026** — the chosen solution is
+  setup profiles only. To recover A, check out the git tag `two-variants`.
+- **The solution: Setup profiles** — act on the configuration. Named profile
+  ("Front of house"), machines follow it; editing re-applies to the fleet;
+  "Apply to new machines" toggle is the bridge to PRD B7 / V2 auto-inherit.
+  Includes the pay-once upsell flow (+ Add): model (Teya Pro 2nd gen £179 /
+  Teya Lite £89, pay once), quantity (up to 5), store, review, order placed.
+- The machine list groups into **Arriving soon** / **Active**. A pending
   machine on a profile shows the tag **Ready on arrival** (PRD B3).
 - Mobile form factor: 393×852 iPhone frame, content scrolls inside the phone.
 
@@ -33,10 +34,9 @@ copy inside the prototype is **British English**.
 
 ```
 index.html          ← generated, fully self-contained (~1 MB). Do not hand-edit.
-build_shell.py      ← rebuilds index.html: base64-embeds each variant into an
-                      iframe-per-blob shell with evaluation notes sidebar.
+build_shell.py      ← rebuilds index.html: base64-embeds the section into an
+                      iframe-per-blob shell with a notes sidebar.
 sections/
-  variant-a.html    ← editable source, self-contained (Tailwind inlined)
   variant-b.html    ← editable source, self-contained (Tailwind inlined)
 assets/tailwind.js  ← Tailwind CSS v4 browser build (vendored, inlined at build time)
 manifest.json       ← section metadata
